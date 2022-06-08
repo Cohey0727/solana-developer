@@ -28,9 +28,26 @@ solana balance [public-address] --url mainnet-beta
 
 ### Airdrop させる
 
+`solana address`のアドレスに SOL を Airdrop する。
+
 ```sh
 solana airdrop 2 [public-key]
+
 ```
+
+- devnet に 5SOL Airdrop する。
+
+```
+solana airdrop 2 --url devnet
+> Requesting airdrop of 2 SOL
+> Signature: 22DoNyYSjuWR2SyuXDHihnm94thsJcoYiAYnH5d1zTKGWRAr175fVknJp1f3Hcecy63WsQA16HwddA8vmM4HRCSq
+```
+
+Signature を見に行く。
+https://explorer.solana.com/tx/{Signature}?cluster=devnet
+https://explorer.solana.com/tx/22DoNyYSjuWR2SyuXDHihnm94thsJcoYiAYnH5d1zTKGWRAr175fVknJp1f3Hcecy63WsQA16HwddA8vmM4HRCSq?cluster=devnet
+
+![Solana Explorer](assets/image_solexplore_1.png "Solana Explorer")
 
 ### Token の作成
 
