@@ -40,4 +40,42 @@ describe("mycalculatordapp", () => {
     );
     assert.ok(account.result.eq(new anchor.BN(5)));
   });
+
+  it("Subtract two numbers", async () => {
+    await program.rpc.sub(new anchor.BN(2), new anchor.BN(3), {
+      accounts: {
+        calculator: calculator.publicKey,
+      },
+    });
+    const account = await program.account.calculator.fetch(
+      calculator.publicKey
+    );
+    assert.ok(account.result.eq(new anchor.BN(-1)));
+  });
+
+  it("Multiplicate two numbers", async () => {
+    await program.rpc.mul(new anchor.BN(2), new anchor.BN(3), {
+      accounts: {
+        calculator: calculator.publicKey,
+      },
+    });
+    const account = await program.account.calculator.fetch(
+      calculator.publicKey
+    );
+    assert.ok(account.result.eq(new anchor.BN(6)));
+  });
+
+  it("Divide two numbers", async () => {
+    await program.rpc.div(new anchor.BN(13), new anchor.BN(3), {
+      accounts: {
+        calculator: calculator.publicKey,
+      },
+    });
+    const account = await program.account.calculator.fetch(
+      calculator.publicKey
+    );
+
+    assert.ok(account.result.eq(new anchor.BN(4)));
+    assert.ok(account.remainder.eq(new anchor.BN(1)));
+  });
 });
