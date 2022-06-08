@@ -1,20 +1,4 @@
 import { Mycalculatordapp } from "./../target/types/mycalculatordapp";
-// import * as anchor from "@project-serum/anchor";
-// import { Program } from "@project-serum/anchor";
-// import { Mycalculatordapp } from "../target/types/mycalculatordapp";
-
-// describe("mycalculatordapp", () => {
-//   // Configure the client to use the local cluster.
-//   anchor.setProvider(anchor.AnchorProvider.env());
-
-//   const program = anchor.workspace.Mycalculatordapp as Program<Mycalculatordapp>;
-
-//   it("Is initialized!", async () => {
-//     // Add your test here.
-//     const tx = await program.methods.initialize().rpc();
-//     console.log("Your transaction signature", tx);
-//   });
-// });
 
 import assert from "assert";
 import * as anchor from "@project-serum/anchor";
@@ -26,6 +10,7 @@ describe("mycalculatordapp", () => {
   anchor.setProvider(provider);
   const calculator = anchor.web3.Keypair.generate();
   const program = anchor.workspace.Mycalculatordapp;
+
   it("Creates a calculator", async () => {
     const initialMessage = "Welcome to Solana!";
     await program.rpc.create(initialMessage, {
@@ -40,5 +25,19 @@ describe("mycalculatordapp", () => {
       calculator.publicKey
     );
     assert.ok(account.greeting === initialMessage);
+    console.log("Hello0");
+    console.log(account.result.toString());
+  });
+
+  it("Add two numbers", async () => {
+    await program.rpc.add(new anchor.BN(2), new anchor.BN(3), {
+      accounts: {
+        calculator: calculator.publicKey,
+      },
+    });
+    const account = await program.account.calculator.fetch(
+      calculator.publicKey
+    );
+    assert.ok(account.result.eq(new anchor.BN(5)));
   });
 });
